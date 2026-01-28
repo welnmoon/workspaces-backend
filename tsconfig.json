@@ -3,6 +3,11 @@
     "module": "CommonJS",
     "moduleResolution": "node",
 
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+
     // "resolvePackageJsonExports": true,
     "esModuleInterop": true,
     "isolatedModules": true,

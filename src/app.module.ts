@@ -1,12 +1,9 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { resolve } from 'path';
-import { UsersModule } from './users/users.module';
-import { PrismaModule } from './prisma/prisma.module';
-import { WorkspacesAuditsModule } from './workspaces-audits/workspaces-audits.module';
-import { LoggerModule } from 'nestjs-pino/LoggerModule';
+import { UsersModule } from './modules/users/users.module';
+import { WorkspacesAuditsModule } from './modules/workspaces-audits/workspaces-audits.module';
+import { PrismaModule } from './modules/prisma/prisma.module';
 
 @Module({
   imports: [
@@ -28,11 +25,10 @@ import { LoggerModule } from 'nestjs-pino/LoggerModule';
     //     },
     //   },
     // }),
+
     UsersModule,
     PrismaModule,
     WorkspacesAuditsModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
