@@ -4,6 +4,9 @@ import { resolve } from 'path';
 import { UsersModule } from './modules/users/users.module';
 import { WorkspacesAuditsModule } from './modules/workspaces-audits/workspaces-audits.module';
 import { PrismaModule } from './modules/prisma/prisma.module';
+import { WorkspacesModule } from './modules/workspaces/workspaces.module';
+import { ProjectsModule } from './modules/projects/projects.module';
+import { TasksModule } from './modules/tasks/tasks.module';
 
 @Module({
   imports: [
@@ -27,6 +30,9 @@ import { PrismaModule } from './modules/prisma/prisma.module';
     // }),
 
     UsersModule,
+    WorkspacesModule,
+    ProjectsModule,
+    TasksModule,
     PrismaModule,
     WorkspacesAuditsModule,
   ],
