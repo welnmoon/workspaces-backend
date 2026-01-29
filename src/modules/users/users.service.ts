@@ -3,14 +3,17 @@ import { PrismaService } from '../prisma/prisma.service';
 import { UserResponseDto } from './dto/user.dto';
 import { Prisma } from '@prisma/client';
 import { userPublicSelect } from './prisma/user.select';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
+  // ====================
+  // Query methods
+  // ====================
   async getAll(): Promise<UserResponseDto[]> {
     return this.prisma.user.findMany({ select: userPublicSelect });
-    // return [{ id: 1, name: 'John Doe' }];
   }
 
   async getUserById(id: string): Promise<UserResponseDto> {
@@ -19,20 +22,7 @@ export class UsersService {
         where: {
           id,
         },
-        select: {
-          id: true,
-          email: true,
-          firstName: true,
-          lastName: true,
-          nickname: true,
-          createdAt: true,
-          image: true,
-          emailVerified: true,
-          wasOnline: true,
-          platformRole: true,
-          updatedAt: true,
-          currentTariff: true,
-        },
+        select: userPublicSelect,
       });
     } catch (e) {
       if (
@@ -44,4 +34,18 @@ export class UsersService {
       throw e;
     }
   }
+
+  // ====================
+  // Command methods
+  // ====================
+  async create() {}
+  async update(id: string, dto: UpdateUserDto): Promise<UserResponseDto> {
+    return this.prisma.user.update({
+      where: { id },
+      data: dto,
+
+      select: userPublicSelect,
+    });
+  }
+  async delete() {}
 }
