@@ -6,6 +6,6 @@ import { JwtAuthGuard } from '@/common/guards/jwt-auth.guard';
 
 @Module({
   imports: [PassportModule],
-  providers: [JwtStrategy, { provide: APP_GUARD, useClass: JwtAuthGuard }],
+  providers: [JwtStrategy],
 })
 export class AuthModule {}

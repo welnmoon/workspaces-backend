@@ -4,7 +4,7 @@ import {
   Delete,
   Get,
   Param,
-  Patch,
+  Put,
   Post,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
@@ -27,8 +27,9 @@ export class UsersController {
     return this.usersService.getUserById(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   async updateUser(@Param('id') id: string, @Body() dto: UpdateUserDto) {
+    // Думаю проблема в том что не то прокидываем
     return this.usersService.update(id, dto);
   }
 
