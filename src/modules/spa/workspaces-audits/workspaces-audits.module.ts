@@ -4,6 +4,6 @@ import { WorkspacesAuditsController } from './workspaces-audits.controller';
 
 @Module({
   providers: [WorkspacesAuditsService],
-  controllers: [WorkspacesAuditsController]
+  controllers: [WorkspacesAuditsController],
 })
 export class WorkspacesAuditsModule {}

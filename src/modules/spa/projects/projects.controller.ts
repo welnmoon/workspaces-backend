@@ -9,7 +9,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { CreateProjectDto } from './dto/create-project.dto';
-import { ProjectResponseDto } from './dto/project.dto';
+import { ProjectListItemDto } from './dto/project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { ProjectsService } from './projects.service';
 
@@ -18,19 +18,19 @@ export class ProjectsController {
   constructor(private projectsService: ProjectsService) {}
 
   @Get()
-  async getAll(): Promise<ProjectResponseDto[]> {
+  async getAll(): Promise<ProjectListItemDto[]> {
     return this.projectsService.getAll();
   }
 
   @Get(':id')
   async getById(
     @Param('id', ParseIntPipe) id: number,
-  ): Promise<ProjectResponseDto> {
+  ): Promise<ProjectListItemDto> {
     return this.projectsService.getById(id);
   }
 
   @Post()
-  async create(@Body() dto: CreateProjectDto): Promise<ProjectResponseDto> {
+  async create(@Body() dto: CreateProjectDto): Promise<ProjectListItemDto> {
     return this.projectsService.create(dto);
   }
 
@@ -38,14 +38,14 @@ export class ProjectsController {
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: UpdateProjectDto,
-  ): Promise<ProjectResponseDto> {
+  ): Promise<ProjectListItemDto> {
     return this.projectsService.update(id, dto);
   }
 
   @Delete(':id')
   async delete(
     @Param('id', ParseIntPipe) id: number,
-  ): Promise<ProjectResponseDto> {
+  ): Promise<ProjectListItemDto> {
     return this.projectsService.delete(id);
   }
 }

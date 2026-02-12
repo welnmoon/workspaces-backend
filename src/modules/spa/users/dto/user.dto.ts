@@ -1,4 +1,4 @@
-import { PlatformRole, Tariff } from "@prisma/client";
+import { PlatformRole, Tariff } from '@prisma/client';
 
 export class UserResponseDto {
   id: string;

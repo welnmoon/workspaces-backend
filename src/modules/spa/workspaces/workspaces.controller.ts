@@ -30,9 +30,7 @@ export class WorkspacesController {
   }
 
   @Post()
-  async create(
-    @Body() dto: CreateWorkspaceDto,
-  ): Promise<WorkspaceResponseDto> {
+  async create(@Body() dto: CreateWorkspaceDto): Promise<WorkspaceResponseDto> {
     return this.workspacesService.create(dto);
   }
 

@@ -1,12 +1,5 @@
 import { TrimDecorator } from '@/common/decorators/trim.decorator';
-import {
-  IsDateString,
-  IsInt,
-  IsOptional,
-  IsString,
-  MaxLength,
-  MinLength,
-} from 'class-validator';
+import { IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 
 export class UpdateProjectDto {
   @IsOptional()
@@ -22,11 +15,11 @@ export class UpdateProjectDto {
   @MaxLength(2000)
   description?: string;
 
-  @IsOptional()
-  @IsInt()
-  workspaceId?: number;
+  // @IsOptional()
+  // @IsInt()
+  // workspaceId?: number;
 
-  @IsOptional()
-  @IsDateString()
-  endedAt?: string;
+  // @IsOptional()
+  // @IsDateString()
+  // endedAt?: string;
 }

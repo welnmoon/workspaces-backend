@@ -8,4 +8,15 @@ export const projectPublicSelect = Prisma.validator<Prisma.ProjectSelect>()({
   createdAt: true,
   updatedAt: true,
   endedAt: true,
+  Sprint: {
+    select: {
+      id: true,
+      name: true,
+    },
+  },
+  _count: {
+    select: {
+      Task: true,
+    },
+  },
 });
