@@ -2,13 +2,13 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { resolve } from 'path';
 
-import { AuthModule } from './modules/spa/auth/auth.module';
-import { UsersModule } from './modules/spa/users/users.module';
-import { WorkspacesModule } from './modules/spa/workspaces/workspaces.module';
-import { ProjectsModule } from './modules/spa/projects/projects.module';
-import { TasksModule } from './modules/spa/tasks/tasks.module';
-import { PrismaModule } from './modules/spa/prisma/prisma.module';
-import { WorkspacesAuditsModule } from './modules/spa/workspaces-audits/workspaces-audits.module';
+import { PrismaModule } from './modules/prisma/prisma.module';
+import { UsersModule } from './modules/app/users/users.module';
+import { WorkspacesModule } from './modules/app/workspaces/workspaces.module';
+import { ProjectsModule } from './modules/app/projects/projects.module';
+import { TasksModule } from './modules/app/tasks/tasks.module';
+import { WorkspacesAuditsModule } from './modules/app/workspaces-audits/workspaces-audits.module';
+import { AuthModule } from './modules/app/auth/auth.module';
 
 @Module({
   imports: [

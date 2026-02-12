@@ -1,17 +1,60 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 import { CreateWorkspaceDto } from './dto/create-workspace.dto';
 import { WorkspaceResponseDto } from './dto/workspace.dto';
 import { UpdateWorkspaceDto } from './dto/update-workspace.dto';
 import { workspacePublicSelect } from './prisma/workspace.select';
+import { WorkspaceWithProjectsType } from './types/client/workspace-with-projects';
+import { ClientWorkspaceDto } from './dto/admin/w-res-dto';
 
+const toWorkspaceDto = (w: WorkspaceWithProjectsType): ClientWorkspaceDto => {
+  return {
+    ...w,
+    projects: w.Project.map((p) => ({
+      ...p,
+      tasks: p.Task.map((t) => ({ ...t })),
+    })),
+  };
+};
 @Injectable()
 export class WorkspacesService {
   constructor(private prisma: PrismaService) {}
 
+  async getUserWorkspaces(userId: string): Promise<ClientWorkspaceDto[]> {
+    const rows = await this.prisma.workspace.findMany({
+      where: {
+        Membership: {
+          some: { userId: userId },
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        avatarUrl: true,
+        createdAt: true,
+        updatedAt: true,
+        Project: {
+          select: {
+            id: true,
+            name: true,
+            Task: {
+              select: {
+                title: true,
+                status: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    return rows.map(toWorkspaceDto);
+  }
+
   // ====================
-  // Query methods
+  // Admin
   // ====================
   async getAll(): Promise<WorkspaceResponseDto[]> {
     return this.prisma.workspace.findMany({ select: workspacePublicSelect });
