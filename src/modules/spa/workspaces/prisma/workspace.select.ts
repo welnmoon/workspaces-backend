@@ -1,4 +1,4 @@
-import { Prisma, TaskStatus } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 
 export const workspacePublicSelect = Prisma.validator<Prisma.WorkspaceSelect>()(
   {

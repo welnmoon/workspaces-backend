@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateProjectDto } from './dto/create-project.dto';
-import { ProjectResponseDto } from './dto/project.dto';
+import { ProjectListItemDto } from './dto/project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { projectPublicSelect } from './prisma/project.select';
 
@@ -13,11 +13,29 @@ export class ProjectsService {
   // ====================
   // Query methods
   // ====================
-  async getAll(): Promise<ProjectResponseDto[]> {
-    return this.prisma.project.findMany({ select: projectPublicSelect });
+  async getAll(): Promise<ProjectListItemDto[]> {
+    const projects = await this.prisma.project.findMany({
+      select: projectPublicSelect,
+    });
+
+    const doneByProject = await this.prisma.task.groupBy({
+      by: ['projectId'],
+      where: { status: 'DONE' },
+      _count: { _all: true },
+    });
+
+    const doneMap = new Map(
+      doneByProject.map((x) => [x.projectId, x._count._all]),
+    );
+
+    return projects.map((p) => ({
+      ...p,
+      tasksTotal: p._count.Task,
+      tasksDone: doneMap.get(p.id) ?? 0,
+    }));
   }
 
-  async getById(id: number): Promise<ProjectResponseDto> {
+  async getById(id: number): Promise<ProjectListItemDto> {
     try {
       return await this.prisma.project.findUniqueOrThrow({
         where: { id },
@@ -37,7 +55,7 @@ export class ProjectsService {
   // ====================
   // Command methods
   // ====================
-  async create(dto: CreateProjectDto): Promise<ProjectResponseDto> {
+  async create(dto: CreateProjectDto): Promise<ProjectListItemDto> {
     return this.prisma.project.create({
       data: {
         ...dto,
@@ -47,10 +65,7 @@ export class ProjectsService {
     });
   }
 
-  async update(
-    id: number,
-    dto: UpdateProjectDto,
-  ): Promise<ProjectResponseDto> {
+  async update(id: number, dto: UpdateProjectDto): Promise<ProjectListItemDto> {
     return this.prisma.project.update({
       where: { id },
       data: dto,
@@ -58,7 +73,7 @@ export class ProjectsService {
     });
   }
 
-  async delete(id: number): Promise<ProjectResponseDto> {
+  async delete(id: number): Promise<ProjectListItemDto> {
     try {
       return await this.prisma.project.delete({
         where: { id },

@@ -26,7 +26,7 @@ export class UsersService {
         },
         select: userPublicSelect,
       });
-    } catch (e) {
+    } catch (e: unknown) {
       if (
         e instanceof Prisma.PrismaClientKnownRequestError &&
         e.code === 'P2025'
@@ -72,7 +72,7 @@ export class UsersService {
         where: { id },
         select: userPublicSelect,
       });
-    } catch (error) {
+    } catch (error: unknown) {
       if (
         error instanceof Prisma.PrismaClientKnownRequestError &&
         error.code === 'P2025'
