@@ -8,13 +8,13 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { CreateWorkspaceDto } from './dto/create-workspace.dto';
-import { WorkspacesService } from './workspaces.service';
-import { UpdateWorkspaceDto } from './dto/update-workspace.dto';
-import { WorkspaceResponseDto } from './dto/workspace.dto';
+import { WorkspacesService } from '../workspaces.service';
+import { WorkspaceResponseDto } from '../dto/workspace.dto';
+import { CreateWorkspaceDto } from '../dto/create-workspace.dto';
+import { UpdateWorkspaceDto } from '../dto/update-workspace.dto';
 
-@Controller('workspaces')
-export class WorkspacesController {
+@Controller('api/admin/workspaces')
+export class AdminWorkspacesController {
   constructor(private workspacesService: WorkspacesService) {}
 
   @Get()
